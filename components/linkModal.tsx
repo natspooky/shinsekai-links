@@ -2,6 +2,7 @@ import shareFormat from '@/data/share-index';
 import { linkButton } from '@/data/types';
 import EventButton from './eventButton';
 import Chain from '@/public/svg/chain.svg';
+import Icon from './icon';
 
 export default function LinkModal({
 	href,
@@ -24,25 +25,28 @@ export default function LinkModal({
 			<div className="modal-container">
 				<EventButton clickEvent={clickHandler}></EventButton>
 				<div className="modal">
-					<span>
+					<a href={href} className="modal-link-info">
+						<Icon icon={icon}></Icon>
 						<h1>{title}</h1>
+					</a>
+
+					<span>
+						{shareFormat.map((data, index) => {
+							return (
+								<div key={index}>
+									<EventButton
+										clickEvent={() => {
+											window.open(
+												generateLink(data.format, href),
+												'_blank',
+											);
+										}}
+										icon={Chain.src}
+									></EventButton>
+								</div>
+							);
+						})}
 					</span>
-					{/* put links */}
-					{shareFormat.map((data, index) => {
-						return (
-							<div key={index}>
-								<EventButton
-									clickEvent={() => {
-										window.open(
-											generateLink(data.format, href),
-											'_blank',
-										);
-									}}
-									icon={Chain.src}
-								></EventButton>
-							</div>
-						);
-					})}
 				</div>
 			</div>
 		</>

@@ -1,7 +1,7 @@
 const index = [
 	{
 		icon: 'svg/instagram.svg',
-		href: '',
+		href: 'https://instagram.com',
 		title: 'Instagram',
 	},
 	{
