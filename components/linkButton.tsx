@@ -5,6 +5,7 @@ import Icon from './icon';
 import EventButton from './eventButton';
 import Link from 'next/link';
 import LinkModal from './linkModal';
+import Chain from '@/public/svg/chain.svg';
 
 export default function LinkButton({
 	href,
@@ -37,7 +38,10 @@ export default function LinkButton({
 					<Icon icon={icon}></Icon>
 					<p>{title}</p>
 				</span>
-				<EventButton clickEvent={clickHandler}></EventButton>
+				<EventButton
+					clickEvent={clickHandler}
+					icon={Chain.src}
+				></EventButton>
 			</Link>
 		</div>
 	);

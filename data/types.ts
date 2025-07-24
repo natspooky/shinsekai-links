@@ -32,6 +32,7 @@ export interface eventElement {
 export interface eventButton {
 	clickEvent: eventCallbackButton;
 	icon?: string;
+	children?: ReactNode;
 }
 
 export interface imageSize {

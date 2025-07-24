@@ -1,8 +1,17 @@
 import shareFormat from '@/data/share-index';
 import { linkButton } from '@/data/types';
 import EventButton from './eventButton';
-import Chain from '@/public/svg/chain.svg';
 import Icon from './icon';
+import Meta from '@/data/metadata';
+import Image from 'next/image';
+import Cross from '@/public/svg/cross.svg';
+
+interface generator {
+	format: string;
+	link?: string;
+	appName?: string;
+	companyName?: string;
+}
 
 export default function LinkModal({
 	href,
@@ -14,8 +23,25 @@ export default function LinkModal({
 		modalProp(null);
 	};
 
-	const generateLink = (format: string, message?: string): string => {
-		return format + (message ?? '');
+	const generateLink = ({
+		format,
+		link,
+		appName,
+		companyName,
+	}: generator): string => {
+		if (link && format.includes('{link}')) {
+			format = format.replace('{link}', link);
+		}
+
+		if (appName && format.includes('{appName}')) {
+			format = format.replace('{appName}', appName);
+		}
+
+		if (companyName && format.includes('{companyName}')) {
+			format = format.replace('{companyName}', companyName);
+		}
+
+		return format;
 	};
 
 	return (
@@ -25,25 +51,43 @@ export default function LinkModal({
 			<div className="modal-container">
 				<EventButton clickEvent={clickHandler}></EventButton>
 				<div className="modal">
-					<a href={href} className="modal-link-info">
+					<div className="top-bar">
+						<h1>Share</h1>
+						<EventButton
+							clickEvent={clickHandler}
+							icon={Cross.src}
+						></EventButton>
+					</div>
+
+					<a href={href} target="_blank" className="modal-link-info">
 						<Icon icon={icon}></Icon>
-						<h1>{title}</h1>
+						<span>
+							<h1>{title}</h1>
+							<p>{Meta.tag}</p>
+						</span>
 					</a>
 
-					<span>
+					<span className="link-container">
 						{shareFormat.map((data, index) => {
 							return (
-								<div key={index}>
-									<EventButton
-										clickEvent={() => {
-											window.open(
-												generateLink(data.format, href),
-												'_blank',
-											);
-										}}
-										icon={Chain.src}
-									></EventButton>
-								</div>
+								<a
+									key={index}
+									href={generateLink({
+										format: data.format,
+										link: href,
+										appName: title,
+										companyName: Meta.name,
+									})}
+									target="_blank"
+								>
+									<Image
+										alt="icon"
+										src={data.icon}
+										width={40}
+										height={40}
+									></Image>
+									<p>{data.name}</p>
+								</a>
 							);
 						})}
 					</span>
