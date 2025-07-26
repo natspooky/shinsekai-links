@@ -1,9 +1,10 @@
 const index = [
+	/*
 	{
 		icon: 'svg/instagram.svg',
 		href: 'https://instagram.com',
 		title: 'Instagram',
-	},
+	},*/
 	{
 		icon: 'svg/tiktok.svg',
 		href: 'https://www.tiktok.com/@shinsekai_prod',
